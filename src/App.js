@@ -1,10 +1,8 @@
-import logo from './logo.svg';
-import './App.css';
-
+import Body from "./Components/Body";
 function App() {
-  return (
-    <div className="App text-green-500 font-bold text-2xl ">
-     Hello Everyone Welcome to netflix - Gpt
+  return (   
+    <div>
+     <Body/>
     </div>
   );
 }
