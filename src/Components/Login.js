@@ -7,7 +7,7 @@ import {auth} from '../Utils/FireBase'
 import { updateProfile } from "firebase/auth";
 import { useDispatch } from 'react-redux';
 import { addUser } from '../Utils/userSlice';
-import { LOGIN_AVATAR } from '../Utils/constants';
+import { BG_URL, LOGIN_AVATAR } from '../Utils/constants';
 
 
 const Login = () => {
@@ -87,7 +87,7 @@ const Login = () => {
     <div>
       <Header/>
       <div className='absolute'>
-        <img src='https://assets.nflxext.com/ffe/siteui/vlv3/655a9668-b002-4262-8afb-cf71e45d1956/5ff265b6-3037-44b2-b071-e81750b21783/IN-en-20240715-POP_SIGNUP_TWO_WEEKS-perspective_WEB_c6d6616f-4478-4ac2-bdac-f54b444771dd_medium.jpg'></img>
+        <img src={BG_URL}></img>
       </div>
       <form onSubmit={(e)=>e.preventDefault()} className='w-3/12 absolute p-12 bg-black my-40 mx-auto left-0 right-0 text-white cursor-pointer bg-opacity-85'>
         <h1 className='font-bold text-2xl py-2'>{isSignIn ? "Sign In" : "Sign Up"}</h1>

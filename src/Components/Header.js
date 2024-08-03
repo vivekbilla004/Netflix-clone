@@ -6,7 +6,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addUser, removeUser } from '../Utils/userSlice'
 import { onAuthStateChanged } from "firebase/auth";
 import { useEffect } from 'react';
-import { LOGO } from '../Utils/constants';
+import { LOGO, SUPPORTED_LANGUAGES } from '../Utils/constants';
+import { toggleGptSearchView } from '../Utils/gptSlice';
+import { changelanguage } from '../Utils/configSlice';
+
 
 
 const Header = () => {
@@ -14,6 +17,7 @@ const Header = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const showGptSearch  =useSelector(store=> store.gpt.showGptSearch)
     useEffect(()=>{
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -32,6 +36,16 @@ const Header = () => {
     return () => unsubscribe();
     
   },[])
+
+  const handleGptSearchClick = ()=>{
+    //dispatching a function
+    dispatch(toggleGptSearchView())
+
+  }
+
+  const handleLanguageChange =(e)=>{
+    dispatch(changelanguage(e.target.value))
+  }
   
   const handleSignOut=()=>{
     signOut(auth).then(() => {
@@ -47,11 +61,23 @@ const Header = () => {
       <img className='w-44 ' src={LOGO} alt='logo'>
       </img>
       {user &&  <div className ='flex mr-4'>
-        <img className='w-16 h-16 ' 
+        {showGptSearch && (<select className='bg-black text-white m-4 px-2'
+        onChange={handleLanguageChange}>
+          {
+            SUPPORTED_LANGUAGES.map((lang)=> 
+            <option key={lang.identifier} value={lang.identifier}>{lang.name}</option> )
+          }
+         
+      
+        </select>)}
+        <button className='px-4 py-2 m-4 text-white bg-purple-800 rounded-lg' onClick={handleGptSearchClick}>
+          {showGptSearch ? "Homepage" : "Search GPT"}
+        </button>
+        <img className='w-16 h-16 rounded-md mt-2 mr-1 ' 
         src={user.photoURL}       
          alt="np"></img>
         <button className='p-2 font-bold text-xl text-white' onClick={handleSignOut}>
-          Sign out
+          (Sign out)
         </button>
       </div>}
     </div>
